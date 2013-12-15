@@ -18,7 +18,6 @@ import javafx.stage.Stage;
 
 import com.oracle.javafx.sample.AreaChartSample;
 import com.owlab.graph.query.JsonHttpPostQuery;
-import com.owlab.graph.sample.AreaChartSampleAnni;
 
 public class TimeLineCountsChart extends Application {
 	private static final int MAX_DATA_POINTS = 50;
@@ -70,7 +69,7 @@ public class TimeLineCountsChart extends Application {
 		// sc.setCursor(Cursor.CROSSHAIR);
 
 		// -- Chart Series
-		//series = new LineChart.Series<Number, Number>();
+		// series = new LineChart.Series<Number, Number>();
 		series = new XYChart.Series<Number, Number>();
 		series.setName("Hit counts");
 		chart.getData().add(series);
@@ -99,11 +98,11 @@ public class TimeLineCountsChart extends Application {
 		public void run() {
 			try {
 				// add a item of random data to queue
-				//dataQ.add(Math.random());
+				// dataQ.add(Math.random());
 				// Query owlab response time
 				long elapseTime = 0L;
 				try {
-					elapseTime = AreaChartSampleAnni.query.queryResponseTime();
+					elapseTime = JsonHttpPostQuery.queryResponseTime();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
