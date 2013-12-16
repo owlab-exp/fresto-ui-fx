@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Data;
+import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -35,36 +37,21 @@ public class LineChartWithHover extends Application {
 		stage.setTitle("Line Chart Sample");
 
 		// defining a series
-		/*
-		 * XYChart.Series series = new XYChart.Series();
-		 * series.setName("Hit counts"); // populating the series with data
-		 * series.getData().add(plot(1,23,0));
-		 * series.getData().add(plot(2,14,23));
-		 * series.getData().add(plot(3,15,14));
-		 * series.getData().add(plot(4,24,15));
-		 * series.getData().add(plot(5,34,24));
-		 * series.getData().add(plot(6,36,34));
-		 * series.getData().add(plot(7,22,36));
-		 * series.getData().add(plot(8,45,22));
-		 * series.getData().add(plot(9,43,45));
-		 * series.getData().add(plot(10,17,43));
-		 * series.getData().add(plot(11,29,17));
-		 * series.getData().add(plot(12,25,29));
-		 */
-		/*
-		 * series.getData().add(new XYChart.Data(1, 23));
-		 * series.getData().add(new XYChart.Data(2, 14));
-		 * series.getData().add(new XYChart.Data(3, 15));
-		 * series.getData().add(new XYChart.Data(4, 24));
-		 * series.getData().add(new XYChart.Data(5, 34));
-		 * series.getData().add(new XYChart.Data(6, 36));
-		 * series.getData().add(new XYChart.Data(7, 22));
-		 * series.getData().add(new XYChart.Data(8, 45));
-		 * series.getData().add(new XYChart.Data(9, 43));
-		 * series.getData().add(new XYChart.Data(10, 17));
-		 * series.getData().add(new XYChart.Data(11, 29));
-		 * series.getData().add(new XYChart.Data(12, 25));
-		 */
+		 XYChart.Series series = new XYChart.Series();
+		 series.setName("Hit counts"); // populating the series with data
+		 series.getData().add(plot(1, 23).get(0));
+		 series.getData().add(plot(2, 14).get(0));
+		 series.getData().add(plot(3, 15).get(0));
+		 series.getData().add(plot(4, 24).get(0));
+		 series.getData().add(plot(5, 34).get(0));
+		 series.getData().add(plot(6, 36).get(0));
+		 series.getData().add(plot(7, 22).get(0));
+		 series.getData().add(plot(8, 45).get(0));
+		 series.getData().add(plot(9, 43).get(0));
+		 series.getData().add(plot(10, 17).get(0));
+		 series.getData().add(plot(11, 29).get(0));
+		 series.getData().add(plot(12, 25).get(0));
+		 
 
 		// creating the chart
 		/*
@@ -73,7 +60,7 @@ public class LineChartWithHover extends Application {
 		 */
 		// FXCollections.observableArrayList(series.)
 		@SuppressWarnings("unchecked")
-		final LineChart chart = new LineChart(xAxis, yAxis) {
+		final LineChart<Number, Number> chart = new LineChart<Number, Number>(xAxis, yAxis) {
 			// Override to remove symbols on each data point
 			@Override
 			protected void dataItemAdded(Series<Number, Number> series, int itemIndex, Data<Number, Number> item) {
@@ -81,12 +68,9 @@ public class LineChartWithHover extends Application {
 
 		};
 
-		/*
-		 * final LineChart chart = new LineChart(new NumberAxis(), new
-		 * NumberAxis(), FXCollections.observableArrayList(new XYChart.Series(
-		 * "My portfolio", FXCollections .observableArrayList(plot(23, 14, 15,
-		 * 24, 34, 36, 22, 45, 43, 17, 29, 25)))));
-		 */
+		/*final LineChart chart = new LineChart(new NumberAxis(), new NumberAxis(),
+				FXCollections.observableArrayList(new XYChart.Series("My portfolio", FXCollections
+						.observableArrayList(plot(23, 14, 15, 24, 34, 36, 22, 45, 43, 17, 29, 25)))));*/
 
 		chart.setAnimated(true);
 		chart.setId("browserHitCounts");
@@ -115,7 +99,8 @@ public class LineChartWithHover extends Application {
 		int i = 0;
 		while (i < y.length) {
 			final XYChart.Data<Integer, Integer> data = new XYChart.Data<>(i + 1, y[i]);
-			data.setNode(new HoveredThresholdNode((i == 0) ? 0 : y[i - 1], y[i]));
+			//data.setNode(new HoveredThresholdNode((i == 0) ? 0 : y[i - 1], y[i]));
+			data.setNode(new HoveredThresholdNode((i == 0) ? 0 : 0, y[i]));
 
 			dataset.add(data);
 			i++;
@@ -124,10 +109,10 @@ public class LineChartWithHover extends Application {
 		return dataset;
 	}
 
-	public ObservableList<XYChart.Data<Integer, Integer>> plot(int x, int y, int y0) {
+	public ObservableList<XYChart.Data<Integer, Integer>> plot(int x, int y) {
 		final ObservableList<XYChart.Data<Integer, Integer>> dataset = FXCollections.observableArrayList();
 		final XYChart.Data<Integer, Integer> data = new XYChart.Data<>(x, y);
-		data.setNode(new HoveredThresholdNode((y0 == 0) ? 0 : y0, y));
+		data.setNode(new HoveredThresholdNode(0, y));
 		dataset.add(data);
 		return dataset;
 	}
@@ -151,7 +136,7 @@ public class LineChartWithHover extends Application {
 				@Override
 				public void handle(MouseEvent mouseEvent) {
 					getChildren().clear();
-					setCursor(Cursor.CROSSHAIR);
+					//setCursor(Cursor.CROSSHAIR);
 				}
 			});
 		}

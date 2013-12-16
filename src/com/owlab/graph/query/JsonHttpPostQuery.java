@@ -10,6 +10,18 @@ import org.apache.http.util.EntityUtils;
 
 public class JsonHttpPostQuery {
 	static HttpPost request = new HttpPost("http://fresto1.owlab.com:9999/clientHitCount");
+	static JsonHttpPostQuery httpQuery = null;
+	
+	public static JsonHttpPostQuery getInstance(){
+		if(httpQuery == null){
+			httpQuery = new JsonHttpPostQuery();
+		}
+		return httpQuery;
+	}
+	
+	private JsonHttpPostQuery(){
+		//block private constructor
+	}
 	
     public static void main(String[] args) throws Exception {
     	JSONObject json = new JSONObject();
